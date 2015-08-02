@@ -104,7 +104,7 @@
                       TabIndex="1"
                       Style="{StaticResource ToggleMenuButtonStyle}"
                       IsChecked="{Binding IsPaneOpen, ElementName=AppMenu, Mode=TwoWay}"
-                      AutomationProperties.Name="Menu"
+                      Unchecked="OnMenuButtonChecked"
                       ToolTipService.ToolTip="Menu" />
     </Grid>
 </Page>

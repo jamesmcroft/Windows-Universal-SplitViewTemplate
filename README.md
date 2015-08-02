@@ -1,7 +1,3 @@
-# Windows-Universal-SplitViewTemplate
-An MVVM friendly SplitView template for Windows 10 universal applications
-
-
 # Windows 10 (UAP) SplitView Project Template
 This project template is part of my [Developing for Windows 10](http://jamescroft.co.uk/category/blog/windows-10/) blog post series focussing on developing universal mobile applications for the Windows 10 platform.
 

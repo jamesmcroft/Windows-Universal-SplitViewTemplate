@@ -10,7 +10,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d"
-    DataContext="{Binding MainPageViewModel, Source={StaticResource VmLocator}}}">
+    DataContext="{Binding MainPageViewModel, Source={StaticResource VmLocator}}">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -68,13 +68,12 @@
                                 TabIndex="2"
                                 Style="{StaticResource NavigationBackButtonStyle}"
                                 IsEnabled="{Binding NavigationService.CanGoBack}"
-                                Width="{Binding ItemsPanelRoot.Width, ElementName=NavMenuList}"
-                                HorizontalAlignment="{Binding ItemsPanelRoot.HorizontalAlignment, ElementName=NavMenuList}">
+                                Width="{Binding ItemsPanelRoot.Width, ElementName=NavigationMenu}"
+                                HorizontalAlignment="{Binding ItemsPanelRoot.HorizontalAlignment, ElementName=NavigationMenu}">
 
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="Click">
-                                    <core:InvokeCommandAction Command="{Binding}" />
-                                    <!-- Setup Navigate Back Command -->
+                                    <core:InvokeCommandAction Command="{Binding NavigateBackCommand}" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </Button>
@@ -82,8 +81,7 @@
 
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="ItemInvoked">
-                            <core:InvokeCommandAction Command="{Binding}" />
-                            <!-- Setup Item Invoked Command -->
+                            <core:InvokeCommandAction Command="{Binding ItemInvokedCommand}" />
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
                 </controls:SplitViewPaneMenu>

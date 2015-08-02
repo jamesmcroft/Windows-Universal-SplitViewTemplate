@@ -6,6 +6,8 @@
     using Windows.UI.Core;
     using Windows.UI.Xaml.Controls;
 
+    using AppTemplate.Common;
+
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Messaging;
@@ -15,10 +17,32 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="PageViewModel"/> class.
         /// </summary>
+        /// <param name="messenger">
+        /// The messenger.
+        /// </param>
+        /// <param name="navigationService">
+        /// The navigation Service.
+        /// </param>
         protected PageViewModel(IMessenger messenger, NavigationService navigationService)
         {
+            if (messenger == null) throw new ArgumentNullException(nameof(messenger));
+            if (navigationService == null) throw new ArgumentNullException(nameof(navigationService));
+
+            this.Messenger = messenger;
+            this.NavigationService = navigationService;
+
             this.NavigateBackCommand = new RelayCommand(() => this.NavigateBack(null));
         }
+
+        /// <summary>
+        /// Gets the navigation service.
+        /// </summary>
+        public NavigationService NavigationService { get; private set; }
+
+        /// <summary>
+        /// Gets the messenger.
+        /// </summary>
+        public IMessenger Messenger { get; private set; }
 
         /// <summary>
         /// Gets the command for navigating backwards.
@@ -33,7 +57,15 @@
         /// </param>
         public virtual void NavigateBack(BackRequestedEventArgs args)
         {
-            // ToDo: navigation
+            if (this.NavigationService.CanGoBack)
+            {
+                if (args != null)
+                {
+                    args.Handled = true;
+                }
+
+                this.NavigationService.GoBack();
+            }
         }
 
         /// <summary>
@@ -49,7 +81,7 @@
         {
             if (frame == null) throw new ArgumentNullException(nameof(frame));
 
-            // Set navigation frame;
+            this.NavigationService.SetNavigationFrame(frame);
         }
     }
 }

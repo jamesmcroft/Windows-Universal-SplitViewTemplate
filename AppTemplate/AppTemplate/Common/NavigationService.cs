@@ -47,11 +47,24 @@
         {
             if (frame == null) throw new ArgumentNullException(nameof(frame));
 
-            this.NavigationFrame = frame;
-
-            if (this.RootPageType != null)
+            if (this.NavigationFrame == null)
             {
-                this.Navigate(this.RootPageType);
+                this.NavigationFrame = frame;
+
+                if (this.RootPageType != null)
+                {
+                    this.Navigate(this.RootPageType);
+                }
+
+                this.CheckCanGoBack();
+            }
+        }
+
+        public void GoBack()
+        {
+            if (this.NavigationFrame.CanGoBack)
+            {
+                this.NavigationFrame.GoBack();
             }
 
             this.CheckCanGoBack();

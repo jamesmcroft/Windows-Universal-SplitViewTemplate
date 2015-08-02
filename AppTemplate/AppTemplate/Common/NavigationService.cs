@@ -4,6 +4,8 @@
 
     using Windows.UI.Xaml.Controls;
 
+    using AppTemplate.Views;
+
     using GalaSoft.MvvmLight;
 
     /// <summary>
@@ -21,7 +23,7 @@
         /// <summary>
         /// Gets or sets the root page type.
         /// </summary>
-        public Type RootPageType { get; set; }
+        public Type RootPageType => typeof(HomePage); 
 
         /// <summary>
         /// Gets the current page type from the navigation frame.

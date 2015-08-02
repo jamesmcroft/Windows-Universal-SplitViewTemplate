@@ -8,13 +8,14 @@
 
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
+    using GalaSoft.MvvmLight.Messaging;
 
     public abstract class PageViewModel : ViewModelBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PageViewModel"/> class.
         /// </summary>
-        protected PageViewModel()
+        protected PageViewModel(IMessenger messenger, NavigationService navigationService)
         {
             this.NavigateBackCommand = new RelayCommand(() => this.NavigateBack(null));
         }

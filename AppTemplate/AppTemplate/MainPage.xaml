@@ -5,7 +5,26 @@
     xmlns:local="using:AppTemplate"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:AppTemplate.Controls"
+    xmlns:controlModels="using:AppTemplate.Controls.Models"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="SplitViewPaneMenuItemTemplate" x:DataType="controlModels:SplitViewPaneMenuItem">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <FontIcon x:Name="Glyph" FontSize="16" Glyph="{x:Bind SymbolAsChar}" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTipService.ToolTip="{x:Bind Label}"/>
+                    <TextBlock x:Name="Text" Grid.Column="1" Text="{x:Bind Label}" />
+                </Grid>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <VisualStateManager.VisualStateGroups>
@@ -34,6 +53,39 @@
                    DisplayMode="Inline"
                    OpenPaneLength="256"
                    IsTabStop="False">
+
+            <SplitView.Pane>
+                <controls:SplitViewPaneMenu x:Name="NavigationMenu"
+                                            TabIndex="3"
+                                            Margin="0, 48, 0, 0"
+                                            ItemContainerStyle="{StaticResource SplitViewPaneMenuContainerStyle}"
+                                            ItemTemplate="{StaticResource SplitViewPaneMenuItemTemplate}">
+
+                    <controls:SplitViewPaneMenu.Header>
+                        <Button x:Name="BackButton"
+                                TabIndex="2"
+                                Style="{StaticResource NavigationBackButtonStyle}"
+                                IsEnabled="{Binding NavigationService.CanGoBack}"
+                                Width="{Binding ItemsPanelRoot.Width, ElementName=NavMenuList}"
+                                HorizontalAlignment="{Binding ItemsPanelRoot.HorizontalAlignment, ElementName=NavMenuList}">
+
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:InvokeCommandAction Command="{Binding}" />
+                                    <!-- Setup Navigate Back Command -->
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </Button>
+                    </controls:SplitViewPaneMenu.Header>
+
+                    <interactivity:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="ItemInvoked">
+                            <core:InvokeCommandAction Command="{Binding}" />
+                            <!-- Setup Item Invoked Command -->
+                        </core:EventTriggerBehavior>
+                    </interactivity:Interaction.Behaviors>
+                </controls:SplitViewPaneMenu>
+            </SplitView.Pane>
 
             <Frame x:Name="AppFrame">
                 <Frame.ContentTransitions>

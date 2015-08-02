@@ -8,6 +8,51 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="AppMenu.DisplayMode" Value="CompactInline"/>
+                        <Setter Target="AppMenu.IsPaneOpen" Value="True"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="AppMenu.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
+        <SplitView x:Name="AppMenu"
+                   DisplayMode="Inline"
+                   OpenPaneLength="256"
+                   IsTabStop="False">
+
+            <Frame x:Name="AppFrame">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                <EntranceNavigationTransitionInfo/>
+                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
+        </SplitView>
+
+        <ToggleButton x:Name="ToggleMenuButton" 
+                      TabIndex="1"
+                      Style="{StaticResource ToggleMenuButtonStyle}"
+                      IsChecked="{Binding IsPaneOpen, ElementName=AppMenu, Mode=TwoWay}"
+                      AutomationProperties.Name="Menu"
+                      ToolTipService.ToolTip="Menu" />
     </Grid>
 </Page>

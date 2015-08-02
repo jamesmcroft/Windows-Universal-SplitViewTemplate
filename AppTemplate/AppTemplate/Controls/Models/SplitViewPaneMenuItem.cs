@@ -14,6 +14,6 @@
 
         public Type AssociatedPage { get; set; }
 
-        public object NavigationArguments { get; set; }
+        public object Parameters { get; set; }
     }
 }

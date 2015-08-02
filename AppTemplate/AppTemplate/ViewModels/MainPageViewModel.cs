@@ -1,6 +1,7 @@
 ﻿namespace AppTemplate.ViewModels
 {
     using System.Collections.ObjectModel;
+    using System.Windows.Input;
 
     using Windows.UI.Xaml.Controls;
 
@@ -9,6 +10,7 @@
     using AppTemplate.ViewModels.Common;
     using AppTemplate.Views;
 
+    using GalaSoft.MvvmLight.Command;
     using GalaSoft.MvvmLight.Messaging;
 
     public class MainPageViewModel : PageViewModel
@@ -26,12 +28,20 @@
             : base(messenger, navigationService)
         {
             this.InitializeMenu();
+
+            this.ItemInvokedCommand = new RelayCommand<ListViewItem>(this.ItemInvoked);
+
         }
 
         /// <summary>
         /// Gets the menu items for the app.
         /// </summary>
         public ObservableCollection<SplitViewPaneMenuItem> MenuItems { get; private set; }
+
+        /// <summary>
+        /// Gets the item invoked command.
+        /// </summary>
+        public ICommand ItemInvokedCommand { get; private set; }
 
         private void InitializeMenu()
         {
@@ -52,6 +62,15 @@
                                          }
                                  };
 
+        }
+
+        private void ItemInvoked(ListViewItem obj)
+        {
+            var menuItem = obj?.Content as SplitViewPaneMenuItem;
+            if (menuItem != null)
+            {
+                this.NavigationService.Navigate(menuItem.AssociatedPage, menuItem.Parameters);
+            }
         }
     }
 }
